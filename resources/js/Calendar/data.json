@@ -1,0 +1,542 @@
+[
+    {
+        "week": 1,
+        "groups": [
+            {
+                "contents": [
+                    {
+                        "hours": 2,
+                        "teacherCode": "LD",
+                        "type": "CM",
+                        "isNeutralized": true
+                    },
+                    {
+                        "hours": 2,
+                        "teacherCode": "LD",
+                        "type": "CM",
+                        "isNeutralized": false
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1.5,
+                                "teacherCode": "LD",
+                                "type": "TD",
+                                "isNeutralized": true
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "LD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "LD",
+                                        "type": "TP"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "contents": [
+                    {
+                        "hours": 5,
+                        "teacherCode": "LD",
+                        "type": "CM",
+                        "isNeutralized": true
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1.5,
+                                "teacherCode": "LD",
+                                "type": "TD",
+                                "isNeutralized": false
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "LD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "week": 2,
+        "groups": [
+            {
+                "contents": [
+                    {
+                        "hours": 1,
+                        "teacherCode": "JD",
+                        "type": "CM",
+                        "isNeutralized": false
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": true
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": false
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 4,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "type": "TP",
+                                        "teacherCode": "JD",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "type": "TP",
+                                        "teacherCode": "JDO",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "type": "TP",
+                                        "teacherCode": "JD",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "type": "TP",
+                                        "teacherCode": "JDO",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": false
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": true
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "type": "TP",
+                                        "teacherCode": "JD",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "type": "TP",
+                                        "teacherCode": "JDO",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "type": "TP",
+                                        "teacherCode": "JD",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "type": "TP",
+                                        "teacherCode": "JDO",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "week": 3,
+        "groups": [
+            {
+                "contents": [
+                    {
+                        "hours": 1,
+                        "teacherCode": "JD",
+                        "type": "CM",
+                        "isNeutralized": true
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": false
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": true
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": true
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": false
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "week": 4,
+        "groups": [
+            {
+                "contents": [
+                    {
+                        "hours": 1,
+                        "teacherCode": "JD",
+                        "type": "CM",
+                        "isNeutralized": false
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": true
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": false
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": false
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": true
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "week": 5,
+        "groups": [
+            {
+                "contents": [
+                    {
+                        "hours": 1,
+                        "teacherCode": "JD",
+                        "type": "CM",
+                        "isNeutralized": true
+                    }
+                ],
+                "groups": [
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": false
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": true
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "contents": [
+                            {
+                                "hours": 1,
+                                "teacherCode": "JD",
+                                "type": "TD",
+                                "isNeutralized": true
+                            },
+                            {
+                                "hours": 2,
+                                "teacherCode": "JDO",
+                                "type": "TD",
+                                "isNeutralized": false
+                            }
+                        ],
+                        "groups": [
+                            {
+                                "contents": [
+                                    {
+                                        "hours": 1,
+                                        "teacherCode": "JD",
+                                        "type": "TP",
+                                        "isNeutralized": false
+                                    },
+                                    {
+                                        "hours": 2,
+                                        "teacherCode": "JDO",
+                                        "type": "TP",
+                                        "isNeutralized": true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
