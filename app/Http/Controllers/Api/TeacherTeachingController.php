@@ -770,6 +770,9 @@ class TeacherTeachingController extends Controller
                     case 'CM':
                         $totalCM += $slot->duration;
                         break;
+                    default:
+                        "Erreur";
+                    break;
                 }
                 
                 if (!isset($groupHours[$slot->academic_promotion_id])) {
