@@ -34,6 +34,8 @@ class RoleManager
                     return $next($request);
                 }
                 break;
+            default:
+                break;  
         }
 
         switch ($userRole->level) {
@@ -42,6 +44,8 @@ class RoleManager
             case 1:
             case 2:
                 return redirect()->route('provisionnal_calendar');
+            default:
+                break;
         }
 
         return redirect()->route('logout');
