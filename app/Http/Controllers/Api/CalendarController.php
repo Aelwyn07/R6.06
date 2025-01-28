@@ -87,19 +87,9 @@ class CalendarController extends Controller
                         ])
                         ->orderBy('week_number')
                         ->get();
-
-            if ($weeks->isEmpty()) {
-                return response()->json([]);
-            }
-
-            // Récupérer la promotion du premier slot trouvé
             $firstSlot = $weeks->pluck('slots')->flatten()->first();
-            if (!$firstSlot) {
-                return response()->json([]);
-            }
-
             $promotion = $firstSlot->academicPromotion;
-            if (!$promotion) {
+            if ($weeks->isEmpty() || !$firstSlot || !$promotion) {
                 return response()->json([]);
             }
 
