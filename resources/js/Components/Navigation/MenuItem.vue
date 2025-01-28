@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
-import Icon from '../Icon.vue';
-import { MenuItem } from '@/types/models';
-import { useLabelsStore } from '@/Stores/labelsStore';
+import { defineProps, computed } from "vue";
+import Icon from "../Icon.vue";
+import { MenuItem } from "@/types/models";
+import { useLabelsStore } from "@/stores/labelsStore";
 
 const labelsStore = useLabelsStore();
 
 const props = defineProps<{
-    item: MenuItem,
-    active: boolean,
+    item: MenuItem;
+    active: boolean;
 }>();
 
 const displayLabel = computed(() => {
@@ -17,11 +17,18 @@ const displayLabel = computed(() => {
 </script>
 
 <template>
-    <li :class="['menu-item flex flex-col items-center', { 'disabled': item.disable }]">
-        <div :class="[
-            'icon-wrapper flex justify-center items-center w-14 h-10 rounded-3xl',
-            ( active ? 'bg-red-100' : 'bg-white' )
-        ]">
+    <li
+        :class="[
+            'menu-item flex flex-col items-center',
+            { disabled: item.disable },
+        ]"
+    >
+        <div
+            :class="[
+                'icon-wrapper flex justify-center items-center w-14 h-10 rounded-3xl',
+                active ? 'bg-red-100' : 'bg-white',
+            ]"
+        >
             <Icon :name="item.iconClass" :size="24" :strokeWidth="2" />
         </div>
         <span class="text-center">{{ displayLabel }}</span>

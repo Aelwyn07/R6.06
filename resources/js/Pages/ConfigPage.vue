@@ -108,7 +108,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import ConfigLayout from "@/Layouts/ConfigLayout.vue";
-import { useLabelsStore } from "@/Stores/labelsStore";
+import { useLabelsStore } from "@/stores/labelsStore";
 import axios from "axios";
 
 interface Label {

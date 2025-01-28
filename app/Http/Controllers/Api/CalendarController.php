@@ -166,8 +166,10 @@ class CalendarController extends Controller
                 case 'TP':
                     $data['subgroupId'] = $slot->academic_subgroup_id;
                     break;
+                default:
+                    $data['error'] = "Type inconnu";
+                    break;
             }
-
             return $data;
         })->values()->all();
     }

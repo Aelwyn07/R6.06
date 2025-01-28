@@ -17,4 +17,13 @@ export default defineConfig({
             },
         }),
     ],
+    server: {
+        cors: true,  // ✅ Autorise les requêtes cross-origin
+        localhost: '127.0.0.1', // Ou 'localhost' selon ton setup
+        port: 5173, // S'assurer que Vite utilise bien ce port
+        strictPort: true, // Évite que Vite change de port si 5173 est occupé
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });

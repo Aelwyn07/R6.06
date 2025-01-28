@@ -2,7 +2,7 @@
 import ListManager from "@/Components/ListManager/ListManager.vue";
 import { defineProps, onMounted, computed } from "vue";
 import { Subgroup } from "@/types/models";
-import { useLabelsStore } from "@/Stores/labelsStore";
+import { useLabelsStore } from "@/stores/labelsStore";
 
 const labelsStore = useLabelsStore();
 

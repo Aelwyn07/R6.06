@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ListManager from '@/Components/ListManager/ListManager.vue';
-import { Teaching, Period } from '@/types/models';
-import { defineProps, computed } from 'vue';
-import AddTeachingPopup from '@/Features/Popup/Teachings/AddTeachingPopup.vue';
-import EditTeachingPopup from '@/Features/Popup/Teachings/EditTeachingPopup.vue';
-import { ref } from 'vue';
-import { useLabelsStore } from '@/Stores/labelsStore';
+import ListManager from "@/Components/ListManager/ListManager.vue";
+import { Teaching, Period } from "@/types/models";
+import { defineProps, computed } from "vue";
+import AddTeachingPopup from "@/Features/Popup/Teachings/AddTeachingPopup.vue";
+import EditTeachingPopup from "@/Features/Popup/Teachings/EditTeachingPopup.vue";
+import { ref } from "vue";
+import { useLabelsStore } from "@/stores/labelsStore";
 
 const labelsStore = useLabelsStore();
 
@@ -16,24 +16,24 @@ defineProps<{
 }>();
 
 const title = computed(() => {
-    return labelsStore.getLabel('Enseignements');
+    return labelsStore.getLabel("Enseignements");
 });
 
-const emit = defineEmits(['select']);
+const emit = defineEmits(["select"]);
 
 const showPopup = ref(false);
 const showPopupEdit = ref(false);
 const openPopup = () => {
     showPopup.value = true;
-}
+};
 
 const handleEdit = (teaching: Teaching) => {
     showPopupEdit.value = true;
-}
+};
 
 const handleSelect = (teaching: Teaching) => {
-    emit('select', teaching);
-}
+    emit("select", teaching);
+};
 </script>
 
 <template>
