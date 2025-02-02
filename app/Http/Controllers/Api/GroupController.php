@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
+    private const ERROR_PROM = "Promotion non trouvée";
+
     public function index($year): JsonResponse
     {
         try {
@@ -50,10 +52,7 @@ class GroupController extends Controller
             return response()->json($promotions);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la récupération des promotions');
         }
     }
 
@@ -65,7 +64,7 @@ class GroupController extends Controller
 
             if (!$promotion) {
                 return response()->json([
-                    'error' => 'Promotion non trouvée'
+                    'error' => self::ERROR_PROM
                 ], 404);
             }
 
@@ -87,10 +86,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la récupération de la promotion');
         }
     }
 
@@ -122,10 +118,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la récupération du groupe');
         }
     }
 
@@ -155,10 +148,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la récupération du sous-groupe');
         }
     }
 
@@ -203,10 +193,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la création de la promotion');
         }
     }
 
@@ -221,7 +208,7 @@ class GroupController extends Controller
             $promotionExists = AcademicPromotion::find($promotion);
             if (!$promotionExists) {
                 return response()->json([
-                    'error' => 'Promotion non trouvée'
+                    'error' => self::ERROR_PROM
                 ], 404);
             }
 
@@ -251,10 +238,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la création du groupe');
         }
     }
 
@@ -297,10 +281,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la création de la sous-groupe');
         }
     }
 
@@ -315,7 +296,7 @@ class GroupController extends Controller
             $promotionToUpdate = AcademicPromotion::find($promotion);
             if (!$promotionToUpdate) {
                 return response()->json([
-                    'error' => 'Promotion non trouvée'
+                    'error' => self::ERROR_PROM
                 ], 404);
             }
 
@@ -345,10 +326,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la modifcation de la promotion');
         }
     }
 
@@ -393,10 +371,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la modifcation du Groupe');
         }
     }
 
@@ -441,10 +416,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la modification du sous-groupe');
         }
     }
 
@@ -456,7 +428,7 @@ class GroupController extends Controller
             
             if (!$promotionToDelete) {
                 return response()->json([
-                    'error' => 'Promotion non trouvée'
+                    'error' => self::ERROR_PROM
                 ], 404);
             }
 
@@ -488,10 +460,7 @@ class GroupController extends Controller
             return response()->json($deletedPromotion);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la suppression de la promotion');
         }
     }
 
@@ -541,10 +510,7 @@ class GroupController extends Controller
             return response()->json($deletedGroup);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue lors de la suppression',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la suppression du Groupe');
         }
     }
 
@@ -582,10 +548,15 @@ class GroupController extends Controller
             return response()->json($deletedSubgroup);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->handleException($e, 'Erreur lors de la suppresion du sous-groupe');
         }
+    }
+
+    private function handleException(\Exception $e, string $customMessage): JsonResponse
+    {
+        return response()->json([
+            'error' => $customMessage,
+            'message' => $e->getMessage()
+        ], 500);
     }
 }

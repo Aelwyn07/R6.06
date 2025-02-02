@@ -12,6 +12,8 @@ use App\Models\Slot;
 class CalendarController extends Controller
 {
 
+    private const ERROR_MESSAGE = 'Une erreur est survenue';
+
     /**
      * Crée un nouveau slot dans l'emploi du temps
      */
@@ -30,46 +32,50 @@ class CalendarController extends Controller
                 'week_id' => 'required|exists:weeks,id',
                 'type' => 'required|in:CM,TD,TP'
             ]);
-
+    
+            $errors = [];
+    
             if ($validator->fails()) {
+                $errors['validation'] = $validator->errors();
+            } else {
+                // Vérifier que l'enseignant n'a pas déjà un cours à ce moment
+                $existingSlot = Slot::where('week_id', $request->week_id)
+                    ->where(function ($query) use ($request) {
+                        $query->where('teacher_id', $request->teacher_id)
+                            ->orWhere('substitute_teacher_id', $request->teacher_id);
+                    })
+                    ->first();
+    
+                if ($existingSlot) {
+                    $errors['conflict'] = "L'enseignant a déjà un cours prévu à ce moment";
+                }
+            }
+    
+            if (!empty($errors)) {
                 return response()->json([
                     'error' => 'Données invalides',
-                    'messages' => $validator->errors()
+                    'messages' => $errors
                 ], 422);
             }
-
-            // Vérifier que l'enseignant n'a pas déjà un cours à ce moment
-            $existingSlot = Slot::where('week_id', $request->week_id)
-                ->where(function ($query) use ($request) {
-                    $query->where('teacher_id', $request->teacher_id)
-                        ->orWhere('substitute_teacher_id', $request->teacher_id);
-                })
-                ->first();
-
-            if ($existingSlot) {
-                return response()->json([
-                    'error' => 'L\'enseignant a déjà un cours prévu à ce moment'
-                ], 422);
-            }
-
-            // Créer le slot
+    
+            // Création du slot après validation
             $slot = Slot::create($request->all());
-
+    
             // Charger les relations pour la réponse
             $slot->load(['teacher', 'substituteTeacher', 'teaching', 'academicPromotion']);
-
+    
             return response()->json([
                 'message' => 'Slot créé avec succès',
                 'slot' => $slot
             ], 201);
-
+    
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Une erreur est survenue',
+                'error' => self::ERROR_MESSAGE,
                 'message' => $e->getMessage()
             ], 500);
         }
-    }
+    }    
 
 
     public function getCalendarData($year_id): JsonResponse
@@ -104,7 +110,7 @@ class CalendarController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Une erreur est survenue',
+                'error' => self::ERROR_MESSAGE,
                 'message' => $e->getMessage()
             ], 500);
         }
