@@ -50,10 +50,7 @@ class GroupController extends Controller
             return response()->json($promotions);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -87,10 +84,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -122,10 +116,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -155,10 +146,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -203,10 +191,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -251,10 +236,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -297,10 +279,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -345,10 +324,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -393,10 +369,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -441,10 +414,7 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -488,10 +458,7 @@ class GroupController extends Controller
             return response()->json($deletedPromotion);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -541,10 +508,7 @@ class GroupController extends Controller
             return response()->json($deletedGroup);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue lors de la suppression',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
     }
 
@@ -582,10 +546,14 @@ class GroupController extends Controller
             return response()->json($deletedSubgroup);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return $this->return_error($e);
         }
+    }
+
+    public function return_error(\Exception $e) {
+        return response()->json([
+            'error' => 'Une erreur est survenue',
+            'message' => $e->getMessage()
+        ], 500);
     }
 }

@@ -73,4 +73,4 @@ class SemesterTest extends TestCase
             'year_id' => 999 // ID inexistant
         ]);
     }
-} 
+}
