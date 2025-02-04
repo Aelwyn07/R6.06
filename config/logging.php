@@ -4,7 +4,8 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
-
+use Monolog\Formatter\LineFormatter;
+const LOGS_LARAVEL = 'logs/laravel.log';
 return [
 
     /*
@@ -60,14 +61,14 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path(LOGS_LARAVEL),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path(LOGS_LARAVEL),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => env('LOG_DAILY_DAYS', 14),
             'replace_placeholders' => true,
@@ -124,7 +125,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path(LOGS_LARAVEL),
         ],
 
         'api' => [
@@ -132,7 +133,7 @@ return [
             'path' => storage_path('logs/api.log'),
             'level' => 'debug',
             'days' => 14,
-            'formatter' => \Monolog\Formatter\LineFormatter::class,
+            'formatter' => LineFormatter::class,
             'formatter_with' => [
                 'format' => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
                 'dateFormat' => 'Y-m-d H:i:s',
