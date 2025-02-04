@@ -14,6 +14,8 @@ use Illuminate\Database\QueryException;
 
 class UserControllerApi extends Controller
 {
+    const REQUIRED_STRING_MAX_255 = 'required|string|max:255';
+
     /**
      * Ajouter un nouvel utilisateur
      */
@@ -22,8 +24,8 @@ class UserControllerApi extends Controller
         try {
             $validated = $request->validate([
                 'username' => 'required|string|max:255|unique:users',
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
+                'firstname' => self::REQUIRED_STRING_MAX_255,
+                'lastname' => self::REQUIRED_STRING_MAX_255,
                 'email' => 'required|string|email|max:255|unique:users',
                 'role_id' => 'required|exists:roles,id',
             ]);
@@ -66,8 +68,8 @@ class UserControllerApi extends Controller
         try {
             $validated = $request->validate([
                 'username' => 'required|string|max:255|unique:users,username,' . $id,
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
+                'firstname' => self::REQUIRED_STRING_MAX_255,
+                'lastname' => self::REQUIRED_STRING_MAX_255,
                 'email' => 'required|string|email|max:255|unique:users,email,' . $id,
                 'role_id' => 'required|exists:roles,id',
             ]);
@@ -153,7 +155,7 @@ class UserControllerApi extends Controller
     {
         // Générer un mot de passe aléatoire
         $newPassword = Str::random(4);
-        
+
         // Mettre à jour le mot de passe de l'utilisateur
         $user->password = Hash::make($newPassword);
         $user->save();
