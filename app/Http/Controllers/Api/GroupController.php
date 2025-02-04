@@ -276,7 +276,7 @@ class GroupController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return $this->handleException($e, 'Erreur lors de la création de la sous-groupe');
+            $response = $this->handleException($e, 'Erreur lors de la création de la sous-groupe');
         }
 
         return $response;
@@ -292,7 +292,7 @@ class GroupController extends Controller
             // Vérifie si la promotion existe
             $promotionToUpdate = AcademicPromotion::find($promotion);
             if (!$promotionToUpdate) {
-                return response()->json([
+                $response = response()->json([
                     'error' => self::ERROR_PROM
                 ], 404);
             }
@@ -304,7 +304,7 @@ class GroupController extends Controller
                 ->first();
 
             if ($existingPromotion) {
-                return response()->json([
+                $response = response()->json([
                     'error' => 'Une promotion avec ce nom existe déjà pour cette année'
                 ], 422);
             }
@@ -313,7 +313,7 @@ class GroupController extends Controller
                 'name' => $request->name
             ]);
 
-            return response()->json([
+            $response = response()->json([
                 'message' => 'Promotion modifiée avec succès',
                 'promotion' => [
                     'id' => $promotionToUpdate->id,
@@ -325,6 +325,8 @@ class GroupController extends Controller
         } catch (\Exception $e) {
             $response = $this->handleException($e, 'Erreur lors de la modifcation de la promotion');
         }
+
+        return $response;
     }
 
     public function updateGroup(Request $request, $group): JsonResponse
@@ -345,19 +347,21 @@ class GroupController extends Controller
                 ->first();
 
             if ($existingGroup) {
-                return response()->json(['error' => 'Un groupe avec ce nom existe déjà pour cette promotion'], 422);
+                $response = response()->json(['error' => 'Un groupe avec ce nom existe déjà pour cette promotion'], 422);
             }
 
             $groupToUpdate->update(['name' => $request->name]);
 
-            return response()->json([
+            $response = response()->json([
                 'message' => 'Groupe modifié avec succès',
                 'group' => ['id' => $groupToUpdate->id,'name' => $groupToUpdate->name,'academic_promotion_id' => $groupToUpdate->academic_promotion_id]
             ]);
 
         } catch (\Exception $e) {
-            return $this->handleException($e, 'Erreur lors de la modifcation du Groupe');
+            $response = $this->handleException($e, 'Erreur lors de la modifcation du Groupe');
         }
+
+        return $response;
     }
 
     public function updateSubgroup(Request $request, $subgroup): JsonResponse
@@ -368,7 +372,7 @@ class GroupController extends Controller
             // Vérifie si le sous-groupe existe
             $subgroupToUpdate = AcademicSubgroup::find($subgroup);
             if (!$subgroupToUpdate) {
-                return response()->json(['error' => 'Sous-groupe non trouvé'], 404);
+                $response = response()->json(['error' => 'Sous-groupe non trouvé'], 404);
             }
 
             // Vérifie si un autre sous-groupe avec le même nom existe déjà pour ce groupe
@@ -378,12 +382,12 @@ class GroupController extends Controller
                 ->first();
 
             if ($existingSubgroup) {
-                return response()->json(['error' => 'Un sous-groupe avec ce nom existe déjà pour ce groupe'], 422);
+                $response = response()->json(['error' => 'Un sous-groupe avec ce nom existe déjà pour ce groupe'], 422);
             }
 
             $subgroupToUpdate->update(['name' => $request->name]);
 
-            return response()->json([
+            $response = response()->json([
                 'message' => 'Sous-groupe modifié avec succès',
                 'subgroup' => [
                     'id' => $subgroupToUpdate->id,
@@ -393,8 +397,10 @@ class GroupController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return $this->handleException($e, 'Erreur lors de la modification du sous-groupe');
+            $response = $this->handleException($e, 'Erreur lors de la modification du sous-groupe');
         }
+
+        return $response;
     }
 
     public function deletePromotion($promotion): JsonResponse
