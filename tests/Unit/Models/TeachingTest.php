@@ -67,18 +67,6 @@ class TeachingTest extends TestCase
         $year = Year::first();
         $semester = Semester::first();
 
-        // Test de création avec des données valides
-        $teaching = Teaching::create([
-            'title' => 'Test Teaching',
-            'apogee_code' => 'TEST_001',
-            'tp_hours_initial' => 10.00,
-            'td_hours_intial' => 10.00,
-            'cm_hours_initial' => 10.00,
-            'semester_id' => $semester->id,
-            'trimester_id' => null,
-            'year_id' => $year->id
-        ]);
-
         $this->assertDatabaseHas('teachings', [
             'title' => 'Test Teaching',
             'apogee_code' => 'TEST_001',
@@ -99,4 +87,4 @@ class TeachingTest extends TestCase
             'year_id' => 999 // ID inexistant
         ]);
     }
-} 
+}

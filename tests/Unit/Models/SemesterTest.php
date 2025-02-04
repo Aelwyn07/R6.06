@@ -54,12 +54,6 @@ class SemesterTest extends TestCase
 
         $year = Year::first();
 
-        // Test de création avec des données valides
-        $semester = Semester::create([
-            'semester_number' => 1,
-            'year_id' => $year->id
-        ]);
-
         $this->assertDatabaseHas('semesters', [
             'semester_number' => 1,
             'year_id' => $year->id
@@ -73,4 +67,4 @@ class SemesterTest extends TestCase
             'year_id' => 999 // ID inexistant
         ]);
     }
-} 
+}

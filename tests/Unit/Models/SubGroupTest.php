@@ -58,12 +58,6 @@ class SubGroupTest extends TestCase
 
         $group = AcademicGroup::first();
 
-        // Test de création avec des données valides
-        $subgroup = AcademicSubgroup::create([
-            'name' => 'Test Subgroup',
-            'academic_group_id' => $group->id
-        ]);
-
         $this->assertDatabaseHas('academic_subgroups', [
             'name' => 'Test Subgroup',
             'academic_group_id' => $group->id

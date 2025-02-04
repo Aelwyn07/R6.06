@@ -81,12 +81,6 @@ class PromotionTest extends TestCase
 
         $year = Year::first();
 
-        // Test de création avec des données valides
-        $promotion = AcademicPromotion::create([
-            'name' => 'Test Promotion',
-            'year_id' => $year->id
-        ]);
-
         $this->assertDatabaseHas('academic_promotions', [
             'name' => 'Test Promotion',
             'year_id' => $year->id

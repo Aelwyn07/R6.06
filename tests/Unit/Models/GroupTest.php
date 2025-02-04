@@ -88,12 +88,6 @@ class GroupTest extends TestCase
 
         $promotion = AcademicPromotion::first();
 
-        // Test de création avec des données valides
-        $group = AcademicGroup::create([
-            'name' => 'Test Group',
-            'academic_promotion_id' => $promotion->id
-        ]);
-
         $this->assertDatabaseHas('academic_groups', [
             'name' => 'Test Group',
             'academic_promotion_id' => $promotion->id

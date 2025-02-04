@@ -51,5 +51,4 @@ class WeekTest extends TestCase
 
         $this->assertEquals(52, $week2->week_number);
     }
-
-} 
+}

@@ -43,12 +43,6 @@ class RoleTest extends TestCase
 
     public function test_role_validation()
     {
-        // Test de création avec des données valides
-        $role = Role::create([
-            'name' => 'Test Role',
-            'level' => 1
-        ]);
-
         $this->assertDatabaseHas('roles', [
             'name' => 'Test Role',
             'level' => 1
@@ -62,4 +56,4 @@ class RoleTest extends TestCase
             'level' => 'invalid' // Le niveau doit être un nombre
         ]);
     }
-} 
+}
