@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 class GroupController extends Controller
 {
     private const ERROR_PROM = "Promotion non trouvée";
+    private const ERROR_GROUP = "Groupe non trouvé";
+    private const ERROR_SUBGROUP = "Sous-Groupe non trouvé";
+    private const REQUEST_NAME = 'required|string|max:255';
 
     public function index($year): JsonResponse
     {
@@ -98,7 +101,7 @@ class GroupController extends Controller
 
             if (!$group) {
                 return response()->json([
-                    'error' => 'Groupe non trouvé'
+                    'error' => self::ERROR_GROUP
                 ], 404);
             }
 
@@ -130,7 +133,7 @@ class GroupController extends Controller
 
             if (!$subgroup) {
                 return response()->json([
-                    'error' => 'Sous-groupe non trouvé'
+                    'error' => self::ERROR_SUBGROUP
                 ], 404);
             }
 
@@ -156,103 +159,95 @@ class GroupController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,
             ]);
-
-            // Vérifie si l'année existe
+    
             $yearExists = Year::find($year);
             if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+                $response = response()->json(['error' => 'Année non trouvée'], 404);
+            } else {
+                $existingPromotion = AcademicPromotion::where('name', $request->name)
+                    ->where('year_id', $year)
+                    ->first();
+    
+                if ($existingPromotion) {
+                    $response = response()->json(['error' => 'Une promotion avec ce nom existe déjà pour cette année'], 422);
+                } else {
+                    $promotion = AcademicPromotion::create([
+                        'name' => $request->name,
+                        'year_id' => $year
+                    ]);
+    
+                    $response = response()->json([
+                        'message' => 'Promotion créée avec succès',
+                        'promotion' => [
+                            'id' => $promotion->id,
+                            'name' => $promotion->name,
+                            'year_id' => $promotion->year_id
+                        ]
+                    ], 201);
+                }
             }
-
-            // Vérifie si une promotion avec le même nom existe déjà pour cette année
-            $existingPromotion = AcademicPromotion::where('name', $request->name)
-                ->where('year_id', $year)
-                ->first();
-
-            if ($existingPromotion) {
-                return response()->json([
-                    'error' => 'Une promotion avec ce nom existe déjà pour cette année'
-                ], 422);
-            }
-
-            $promotion = AcademicPromotion::create([
-                'name' => $request->name,
-                'year_id' => $year
-            ]);
-
-            return response()->json([
-                'message' => 'Promotion créée avec succès',
-                'promotion' => [
-                    'id' => $promotion->id,
-                    'name' => $promotion->name,
-                    'year_id' => $promotion->year_id
-                ]
-            ], 201);
-
         } catch (\Exception $e) {
-            return $this->handleException($e, 'Erreur lors de la création de la promotion');
+            $response = $this->handleException($e, 'Erreur lors de la création de la promotion');
         }
-    }
+    
+        return $response;
+    }    
 
     public function storeGroup(Request $request, $promotion): JsonResponse
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,
             ]);
 
             // Vérifie si la promotion existe
             $promotionExists = AcademicPromotion::find($promotion);
             if (!$promotionExists) {
-                return response()->json([
-                    'error' => self::ERROR_PROM
-                ], 404);
+                $response = response()->json(['error' => self::ERROR_PROM], 404);
+            } else {
+                // Vérifie si un groupe avec le même nom existe déjà pour cette promotion
+                $existingGroup = AcademicGroup::where('name', $request->name)
+                    ->where('academic_promotion_id', $promotion)
+                    ->first();
+
+                if ($existingGroup) {
+                    $response = response()->json(['error' => 'Un groupe avec ce nom existe déjà pour cette promotion'], 422);
+                } else {
+                    $group = AcademicGroup::create([
+                        'name' => $request->name,
+                        'academic_promotion_id' => $promotion
+                    ]);
+
+                    $response = response()->json([
+                        'message' => 'Groupe créé avec succès',
+                        'group' => [
+                            'id' => $group->id,
+                            'name' => $group->name,
+                            'academic_promotion_id' => $group->academic_promotion_id
+                        ]
+                    ], 201);
+                }
             }
-
-            // Vérifie si un groupe avec le même nom existe déjà pour cette promotion
-            $existingGroup = AcademicGroup::where('name', $request->name)
-                ->where('academic_promotion_id', $promotion)
-                ->first();
-
-            if ($existingGroup) {
-                return response()->json([
-                    'error' => 'Un groupe avec ce nom existe déjà pour cette promotion'
-                ], 422);
-            }
-
-            $group = AcademicGroup::create([
-                'name' => $request->name,
-                'academic_promotion_id' => $promotion
-            ]);
-
-            return response()->json([
-                'message' => 'Groupe créé avec succès',
-                'group' => [
-                    'id' => $group->id,
-                    'name' => $group->name,
-                    'academic_promotion_id' => $group->academic_promotion_id
-                ]
-            ], 201);
-
         } catch (\Exception $e) {
-            return $this->handleException($e, 'Erreur lors de la création du groupe');
+            $response = $this->handleException($e, 'Erreur lors de la création du groupe');
         }
+
+        return $response;
     }
 
     public function storeSubgroup(Request $request, $group): JsonResponse
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,
             ]);
 
             $groupExists = AcademicGroup::find($group);
             if (!$groupExists) {
                 return response()->json([
-                    'error' => 'Groupe non trouvé'
+                    'error' => self::ERROR_GROUP
                 ], 404);
             }
 
@@ -289,7 +284,7 @@ class GroupController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,
             ]);
 
             // Vérifie si la promotion existe
@@ -334,14 +329,14 @@ class GroupController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,
             ]);
 
             // Vérifie si le groupe existe
             $groupToUpdate = AcademicGroup::find($group);
             if (!$groupToUpdate) {
                 return response()->json([
-                    'error' => 'Groupe non trouvé'
+                    'error' => self::ERROR_GROUP
                 ], 404);
             }
 
@@ -379,7 +374,7 @@ class GroupController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => self::REQUEST_NAME,   
             ]);
 
             // Vérifie si le sous-groupe existe
@@ -472,7 +467,7 @@ class GroupController extends Controller
             
             if (!$groupToDelete) {
                 return response()->json([
-                    'error' => 'Groupe non trouvé'
+                    'error' => self::ERROR_GROUP
                 ], 404);
             }
 
@@ -522,7 +517,7 @@ class GroupController extends Controller
             
             if (!$subgroupToDelete) {
                 return response()->json([
-                    'error' => 'Sous-groupe non trouvé'
+                    'error' => self::ERROR_SUBGROUP
                 ], 404);
             }
 
