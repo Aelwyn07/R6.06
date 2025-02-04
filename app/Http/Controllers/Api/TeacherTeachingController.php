@@ -17,12 +17,10 @@ class TeacherTeachingController extends Controller
     public function getTeachers($year): JsonResponse
     {
         try {
-            // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+
+            $response = checkIfYearExists($year);
+            if ($response) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Récupère les enseignants avec leurs enseignements pour l'année spécifiée
@@ -59,11 +57,9 @@ class TeacherTeachingController extends Controller
     {
         try {
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            $response = checkIfYearExists($year);
+            if ($response) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Récupère les enseignements pour l'année spécifiée
@@ -260,11 +256,9 @@ class TeacherTeachingController extends Controller
             ]);
 
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            $response = checkIfYearExists($year);
+            if ($response) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Vérifie si un enseignant avec le même acronyme existe déjà pour cette année
@@ -336,11 +330,9 @@ class TeacherTeachingController extends Controller
             }
 
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            $response = checkIfYearExists($year);
+            if ($response) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Vérifie si un enseignement avec le même code apogée existe déjà pour cette année
@@ -711,9 +703,6 @@ class TeacherTeachingController extends Controller
     {
         try {
 
-            $teacher = Teacher::findOrFail($teacher_id);
-            $teaching = Teaching::findOrFail($teaching_id);
-
             // Vérifie si la relation existe dans la table pivot
             $relation = DB::table('teachers_teachings')
                 ->where('teacher_id', $teacher_id)
@@ -871,5 +860,16 @@ class TeacherTeachingController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function checkIfYearExists($year)
+        {
+            $yearExists = Year::find($year);
+            if (!$yearExists) {
+                return response()->json([
+                    'error' => 'Année non trouvée'
+                ], 404);
+            }
+            return null;  // si l'année existe
     }
 }
