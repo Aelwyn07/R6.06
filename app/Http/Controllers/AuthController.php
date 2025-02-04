@@ -35,6 +35,8 @@ class AuthController extends Controller
                 case 1:
                 case 2:
                     return redirect()->route('provisionnal_calendar');
+                default:
+                    break;
             }
         }
 

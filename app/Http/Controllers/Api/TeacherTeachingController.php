@@ -667,9 +667,6 @@ class TeacherTeachingController extends Controller
     public function storeTeacherTeaching(Request $request, $teacher_id, $teaching_id): JsonResponse
     {
         try {
-            // Vérifie si l'enseignant et l'enseignement existent
-            $teacher = Teacher::findOrFail($teacher_id);
-            $teaching = Teaching::findOrFail($teaching_id);
 
             // Vérifie si la relation existe déjà
             $existingRelation = DB::table('teachers_teachings')
@@ -770,6 +767,9 @@ class TeacherTeachingController extends Controller
                     case 'CM':
                         $totalCM += $slot->duration;
                         break;
+                    default:
+                        "Erreur";
+                    break;
                 }
                 
                 if (!isset($groupHours[$slot->academic_promotion_id])) {
