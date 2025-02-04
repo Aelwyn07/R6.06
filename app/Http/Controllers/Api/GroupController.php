@@ -328,16 +328,12 @@ class GroupController extends Controller
     public function updateGroup(Request $request, $group): JsonResponse
     {
         try {
-            $request->validate([
-                'name' => self::REQUEST_NAME,
-            ]);
+            $request->validate(['name' => self::REQUEST_NAME,]);
 
             // Vérifie si le groupe existe
             $groupToUpdate = AcademicGroup::find($group);
             if (!$groupToUpdate) {
-                return response()->json([
-                    'error' => self::ERROR_GROUP
-                ], 404);
+                return response()->json(['error' => self::ERROR_GROUP], 404);
             }
 
             // Vérifie si un autre groupe avec le même nom existe déjà pour cette promotion
@@ -347,22 +343,14 @@ class GroupController extends Controller
                 ->first();
 
             if ($existingGroup) {
-                return response()->json([
-                    'error' => 'Un groupe avec ce nom existe déjà pour cette promotion'
-                ], 422);
+                return response()->json(['error' => 'Un groupe avec ce nom existe déjà pour cette promotion'], 422);
             }
 
-            $groupToUpdate->update([
-                'name' => $request->name
-            ]);
+            $groupToUpdate->update(['name' => $request->name]);
 
             return response()->json([
                 'message' => 'Groupe modifié avec succès',
-                'group' => [
-                    'id' => $groupToUpdate->id,
-                    'name' => $groupToUpdate->name,
-                    'academic_promotion_id' => $groupToUpdate->academic_promotion_id
-                ]
+                'group' => ['id' => $groupToUpdate->id,'name' => $groupToUpdate->name,'academic_promotion_id' => $groupToUpdate->academic_promotion_id]
             ]);
 
         } catch (\Exception $e) {
@@ -373,16 +361,12 @@ class GroupController extends Controller
     public function updateSubgroup(Request $request, $subgroup): JsonResponse
     {
         try {
-            $request->validate([
-                'name' => self::REQUEST_NAME,   
-            ]);
+            $request->validate(['name' => self::REQUEST_NAME,   ]);
 
             // Vérifie si le sous-groupe existe
             $subgroupToUpdate = AcademicSubgroup::find($subgroup);
             if (!$subgroupToUpdate) {
-                return response()->json([
-                    'error' => 'Sous-groupe non trouvé'
-                ], 404);
+                return response()->json(['error' => 'Sous-groupe non trouvé'], 404);
             }
 
             // Vérifie si un autre sous-groupe avec le même nom existe déjà pour ce groupe
@@ -392,14 +376,10 @@ class GroupController extends Controller
                 ->first();
 
             if ($existingSubgroup) {
-                return response()->json([
-                    'error' => 'Un sous-groupe avec ce nom existe déjà pour ce groupe'
-                ], 422);
+                return response()->json(['error' => 'Un sous-groupe avec ce nom existe déjà pour ce groupe'], 422);
             }
 
-            $subgroupToUpdate->update([
-                'name' => $request->name
-            ]);
+            $subgroupToUpdate->update(['name' => $request->name]);
 
             return response()->json([
                 'message' => 'Sous-groupe modifié avec succès',
@@ -422,9 +402,7 @@ class GroupController extends Controller
                 ->find($promotion);
             
             if (!$promotionToDelete) {
-                return response()->json([
-                    'error' => self::ERROR_PROM
-                ], 404);
+                return response()->json(['error' => self::ERROR_PROM], 404);
             }
 
             // Sauvegarde des données avant suppression
@@ -466,9 +444,7 @@ class GroupController extends Controller
                 ->find($group);
             
             if (!$groupToDelete) {
-                return response()->json([
-                    'error' => self::ERROR_GROUP
-                ], 404);
+                return response()->json(['error' => self::ERROR_GROUP], 404);
             }
 
             // Sauvegarde des données avant suppression
@@ -501,9 +477,7 @@ class GroupController extends Controller
                 DB::rollback();
                 throw $e;
             }
-
             return response()->json($deletedGroup);
-
         } catch (\Exception $e) {
             return $this->handleException($e, 'Erreur lors de la suppression du Groupe');
         }
@@ -516,9 +490,7 @@ class GroupController extends Controller
                 ->find($subgroup);
             
             if (!$subgroupToDelete) {
-                return response()->json([
-                    'error' => self::ERROR_SUBGROUP
-                ], 404);
+                return response()->json(['error' => self::ERROR_SUBGROU], 404);
             }
 
             // Sauvegarde des données avant suppression
@@ -549,9 +521,6 @@ class GroupController extends Controller
 
     private function handleException(\Exception $e, string $customMessage): JsonResponse
     {
-        return response()->json([
-            'error' => $customMessage,
-            'message' => $e->getMessage()
-        ], 500);
+        return response()->json(['error' => $customMessage,'message' => $e->getMessage()], 500);
     }
 }
