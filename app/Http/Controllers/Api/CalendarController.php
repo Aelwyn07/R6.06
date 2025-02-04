@@ -73,9 +73,11 @@ class CalendarController extends Controller
             return response()->json([
                 'error' => self::ERROR_MESSAGE,
                 'message' => $e->getMessage()
-            ], 500);
+            ];
+            $status = 500;)
         }
     }    
+
 
 
     public function getCalendarData($year_id): JsonResponse
