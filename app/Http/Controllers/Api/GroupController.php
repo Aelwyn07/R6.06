@@ -161,7 +161,7 @@ class GroupController extends Controller
             $request->validate([
                 'name' => self::REQUEST_NAME,
             ]);
-    
+
             $yearExists = Year::find($year);
             if (!$yearExists) {
                 $response = response()->json(['error' => 'Année non trouvée'], 404);
@@ -169,7 +169,7 @@ class GroupController extends Controller
                 $existingPromotion = AcademicPromotion::where('name', $request->name)
                     ->where('year_id', $year)
                     ->first();
-    
+
                 if ($existingPromotion) {
                     $response = response()->json(['error' => 'Une promotion avec ce nom existe déjà pour cette année'], 422);
                 } else {
@@ -177,7 +177,7 @@ class GroupController extends Controller
                         'name' => $request->name,
                         'year_id' => $year
                     ]);
-    
+
                     $response = response()->json([
                         'message' => 'Promotion créée avec succès',
                         'promotion' => [
@@ -191,9 +191,9 @@ class GroupController extends Controller
         } catch (\Exception $e) {
             $response = $this->handleException($e, 'Erreur lors de la création de la promotion');
         }
-    
+
         return $response;
-    }    
+    }
 
     public function storeGroup(Request $request, $promotion): JsonResponse
     {
@@ -408,7 +408,7 @@ class GroupController extends Controller
         try {
             $promotionToDelete = AcademicPromotion::with(['academicGroups.academicSubgroups'])
                 ->find($promotion);
-            
+
             if (!$promotionToDelete) {
                 return response()->json(['error' => self::ERROR_PROM], 404);
             }
@@ -450,7 +450,7 @@ class GroupController extends Controller
         try {
             $groupToDelete = AcademicGroup::with(['academicSubgroups', 'academicPromotion', 'slots'])
                 ->find($group);
-            
+
             if (!$groupToDelete) {
                 return response()->json(['error' => self::ERROR_GROUP], 404);
             }
@@ -496,7 +496,7 @@ class GroupController extends Controller
         try {
             $subgroupToDelete = AcademicSubgroup::with(['academicGroup.academicPromotion'])
                 ->find($subgroup);
-            
+
             if (!$subgroupToDelete) {
                 return response()->json(['error' => self::ERROR_SUBGROU], 404);
             }
