@@ -8,8 +8,11 @@ use App\Http\Controllers\Api\YearController;
 use App\Http\Controllers\Api\UserControllerApi;
 use App\Http\Controllers\Api\RoleControllerApi;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestEmailController;
 
+const GROUPES_GROUPE_GROUP = '/groupes/groupe/{group}';
+const GROUPES_SOUS_GROUPE_SUBGROUP = '/groupes/sous-groupe/{subgroup}';
+const ENSEIGNANT_TEACHER = '/enseignant/{teacher}';
+const ENSEIGNEMENT_TEACHING = '/enseignement/{teaching}';
 Route::middleware(['api.logger'])->group(function () {
     //Years
 
@@ -24,8 +27,8 @@ Route::middleware(['api.logger'])->group(function () {
 
         Route::get('/groupes/{year}', [GroupController::class, 'index']);
         Route::get('/groupes/promotion/{academic_promotion}', [GroupController::class, 'getByPromotion']);
-        Route::get('/groupes/groupe/{group}', [GroupController::class, 'getByGroup']);
-        Route::get('/groupes/sous-groupe/{subgroup}', [GroupController::class, 'getBySubgroup']);
+        Route::get(GROUPES_GROUPE_GROUP, [GroupController::class, 'getByGroup']);
+        Route::get(GROUPES_SOUS_GROUPE_SUBGROUP, [GroupController::class, 'getBySubgroup']);
 
         //Création des données
 
@@ -36,14 +39,14 @@ Route::middleware(['api.logger'])->group(function () {
         //Modification des données
 
         Route::put('/groupes/promotion/{promotion}', [GroupController::class, 'updatePromotion']);
-        Route::put('/groupes/groupe/{group}', [GroupController::class, 'updateGroup']);
-        Route::put('/groupes/sous-groupe/{subgroup}', [GroupController::class, 'updateSubgroup']);
+        Route::put(GROUPES_GROUPE_GROUP, [GroupController::class, 'updateGroup']);
+        Route::put(GROUPES_SOUS_GROUPE_SUBGROUP, [GroupController::class, 'updateSubgroup']);
 
         //Suppression des données
 
         Route::delete('/groupes/promotion/{promotion}', [GroupController::class, 'deletePromotion']);
-        Route::delete('/groupes/groupe/{group}', [GroupController::class, 'deleteGroup']);
-        Route::delete('/groupes/sous-groupe/{subgroup}', [GroupController::class, 'deleteSubgroup']);
+        Route::delete(GROUPES_GROUPE_GROUP, [GroupController::class, 'deleteGroup']);
+        Route::delete(GROUPES_SOUS_GROUPE_SUBGROUP, [GroupController::class, 'deleteSubgroup']);
 
     //Enseignants
 
@@ -53,8 +56,8 @@ Route::middleware(['api.logger'])->group(function () {
         Route::get('/enseignements/{year}', [TeacherTeachingController::class, 'getTeachings']);
         Route::get('/enseignement/enseignants/{teaching}', [TeacherTeachingController::class, 'getTeachersByTeaching']);
         Route::get('/enseignant/enseignements/{teacher}', [TeacherTeachingController::class, 'getTeachingsByTeacher']);
-        Route::get('/enseignant/{teacher}', [TeacherTeachingController::class, 'getTeacher']);
-        Route::get('/enseignement/{teaching}', [TeacherTeachingController::class, 'getTeaching']);
+        Route::get(ENSEIGNANT_TEACHER, [TeacherTeachingController::class, 'getTeacher']);
+        Route::get(ENSEIGNEMENT_TEACHING, [TeacherTeachingController::class, 'getTeaching']);
         Route::get('/enseignement/{teaching}/check-hours', [TeacherTeachingController::class, 'checkTeachingHours']);
 
         Route::get('/enseignant/enseignement/{teacher}/{teaching}', [TeacherTeachingController::class, 'getTeacherTeaching']);
@@ -69,13 +72,13 @@ Route::middleware(['api.logger'])->group(function () {
 
         //Modification des données
 
-        Route::put('/enseignant/{teacher}', [TeacherTeachingController::class, 'updateTeacher']);
-        Route::put('/enseignement/{teaching}', [TeacherTeachingController::class, 'updateTeaching']);
+        Route::put(ENSEIGNANT_TEACHER, [TeacherTeachingController::class, 'updateTeacher']);
+        Route::put(ENSEIGNEMENT_TEACHING, [TeacherTeachingController::class, 'updateTeaching']);
 
         //Suppression des données
 
-        Route::delete('/enseignant/{teacher}', [TeacherTeachingController::class, 'deleteTeacher']);
-        Route::delete('/enseignement/{teaching}', [TeacherTeachingController::class, 'deleteTeaching']);
+        Route::delete(ENSEIGNANT_TEACHER, [TeacherTeachingController::class, 'deleteTeacher']);
+        Route::delete(ENSEIGNEMENT_TEACHING, [TeacherTeachingController::class, 'deleteTeaching']);
 
         Route::delete('/enseignant/enseignement/{teacher}/{teaching}', [TeacherTeachingController::class, 'deleteTeacherTeaching']);
 
