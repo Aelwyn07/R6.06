@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class YearController extends Controller
 {
+    const ERROR = 'Une erreur est survenue';
+
     public function index(): JsonResponse
     {
         try {
@@ -29,7 +31,7 @@ class YearController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Une erreur est survenue',
+                'error' => self::ERROR,
                 'message' => $e->getMessage()
             ], 500);
         }
@@ -59,7 +61,7 @@ class YearController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Une erreur est survenue',
+                'error' => self::ERROR,
                 'message' => $e->getMessage()
             ], 500);
         }
@@ -91,7 +93,7 @@ class YearController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Une erreur est survenue',
+                'error' => self::ERROR,
                 'message' => $e->getMessage()
             ], 500);
         }
