@@ -367,7 +367,7 @@ class GroupController extends Controller
     public function updateSubgroup(Request $request, $subgroup): JsonResponse
     {
         try {
-            $request->validate(['name' => self::REQUEST_NAME,   ]);
+            $request->validate(['name' => self::REQUEST_NAME,]);
 
             // Vérifie si le sous-groupe existe
             $subgroupToUpdate = AcademicSubgroup::find($subgroup);
