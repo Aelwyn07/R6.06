@@ -10,18 +10,20 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/breeze": "^2.2",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
-        "laravel/sail": "^1.37",
+        "laravel/sail": "^1.40",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^11.0.1"
+        "phpunit/phpunit": "^11.5"
     },
     "autoload": {
         "psr-4": {

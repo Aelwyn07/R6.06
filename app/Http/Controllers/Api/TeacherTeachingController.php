@@ -12,17 +12,16 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+define('MIN_VALUE', 'nullable|numeric|min:0');   
+
+
 class TeacherTeachingController extends Controller
 {
     public function getTeachers($year): JsonResponse
     {
         try {
-            // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            if ($response = checkIfYearExists($year)) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Récupère les enseignants avec leurs enseignements pour l'année spécifiée
@@ -48,10 +47,7 @@ class TeacherTeachingController extends Controller
             return response()->json($teachers);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -59,11 +55,9 @@ class TeacherTeachingController extends Controller
     {
         try {
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            
+            if ($response = checkIfYearExists($year)) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Récupère les enseignements pour l'année spécifiée
@@ -89,10 +83,7 @@ class TeacherTeachingController extends Controller
             return response()->json($teachings);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -120,10 +111,7 @@ class TeacherTeachingController extends Controller
             return response()->json($teachers);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -150,10 +138,7 @@ class TeacherTeachingController extends Controller
             return response()->json($teachings);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -192,10 +177,7 @@ class TeacherTeachingController extends Controller
             return response()->json($response);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -242,10 +224,7 @@ class TeacherTeachingController extends Controller
             return response()->json($response);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -260,11 +239,8 @@ class TeacherTeachingController extends Controller
             ]);
 
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            if ($response = checkIfYearExists($year)) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Vérifie si un enseignant avec le même acronyme existe déjà pour cette année
@@ -299,25 +275,23 @@ class TeacherTeachingController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
     public function storeTeaching(Request $request, $year): JsonResponse
     {
         try {
+
             $request->validate([
                 'title' => 'required|string|max:255',
                 'apogee_code' => 'required|string|max:50',
-                'tp_hours_initial' => 'nullable|numeric|min:0',
-                'tp_hours_continued' => 'nullable|numeric|min:0',
-                'td_hours_initial' => 'nullable|numeric|min:0',
-                'td_hours_continued' => 'nullable|numeric|min:0',
-                'cm_hours_initial' => 'nullable|numeric|min:0',
-                'cm_hours_continued' => 'nullable|numeric|min:0',
+                'tp_hours_initial' => MIN_VALUE,
+                'tp_hours_continued' => MIN_VALUE,
+                'td_hours_initial' => MIN_VALUE,
+                'td_hours_continued' => MIN_VALUE,
+                'cm_hours_initial' => MIN_VALUE,
+                'cm_hours_continued' => MIN_VALUE,
                 'semester' => 'nullable|integer|min:1|max:6',
                 'trimester' => 'nullable|integer|min:1|max:4'
             ]);
@@ -336,11 +310,8 @@ class TeacherTeachingController extends Controller
             }
 
             // Vérifie si l'année existe
-            $yearExists = Year::find($year);
-            if (!$yearExists) {
-                return response()->json([
-                    'error' => 'Année non trouvée'
-                ], 404);
+            if ($response = checkIfYearExists($year)) {
+                return $response;  // Si la réponse n'est pas null, retourne directement l'erreur
             }
 
             // Vérifie si un enseignement avec le même code apogée existe déjà pour cette année
@@ -417,10 +388,7 @@ class TeacherTeachingController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -486,10 +454,7 @@ class TeacherTeachingController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -499,12 +464,12 @@ class TeacherTeachingController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'apogee_code' => 'required|string|max:50',
-                'tp_hours_initial' => 'nullable|numeric|min:0',
-                'tp_hours_continued' => 'nullable|numeric|min:0',
-                'td_hours_initial' => 'nullable|numeric|min:0',
-                'td_hours_continued' => 'nullable|numeric|min:0',
-                'cm_hours_initial' => 'nullable|numeric|min:0',
-                'cm_hours_continued' => 'nullable|numeric|min:0',
+                'tp_hours_initial' => MIN_VALUE,
+                'tp_hours_continued' => MIN_VALUE,
+                'td_hours_initial' => MIN_VALUE,
+                'td_hours_continued' => MIN_VALUE,
+                'cm_hours_initial' => MIN_VALUE,
+                'cm_hours_continued' => MIN_VALUE,
                 'semester' => 'nullable|integer|min:1|max:6',
                 'trimester' => 'nullable|integer|min:1|max:4'
             ]);
@@ -605,10 +570,7 @@ class TeacherTeachingController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -657,19 +619,13 @@ class TeacherTeachingController extends Controller
                 'error' => 'Enseignant ou enseignement non trouvé'
             ], 404);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
     public function storeTeacherTeaching(Request $request, $teacher_id, $teaching_id): JsonResponse
     {
         try {
-            // Vérifie si l'enseignant et l'enseignement existent
-            $teacher = Teacher::findOrFail($teacher_id);
-            $teaching = Teaching::findOrFail($teaching_id);
 
             // Vérifie si la relation existe déjà
             $existingRelation = DB::table('teachers_teachings')
@@ -700,19 +656,13 @@ class TeacherTeachingController extends Controller
                 'error' => 'Enseignant ou enseignement non trouvé'
             ], 404);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
     public function deleteTeacherTeaching($teacher_id, $teaching_id): JsonResponse
     {
         try {
-
-            $teacher = Teacher::findOrFail($teacher_id);
-            $teaching = Teaching::findOrFail($teaching_id);
 
             // Vérifie si la relation existe dans la table pivot
             $relation = DB::table('teachers_teachings')
@@ -736,10 +686,7 @@ class TeacherTeachingController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
     }
 
@@ -770,6 +717,9 @@ class TeacherTeachingController extends Controller
                     case 'CM':
                         $totalCM += $slot->duration;
                         break;
+                    default:
+                        "Erreur";
+                    break;
                 }
                 
                 if (!isset($groupHours[$slot->academic_promotion_id])) {
@@ -863,10 +813,25 @@ class TeacherTeachingController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Une erreur est survenue',
-                'message' => $e->getMessage()
-            ], 500);
+            return errorMessage($e);
         }
+    }
+
+    public function checkIfYearExists($year)
+        {
+            $yearExists = Year::find($year);
+            if (!$yearExists) {
+                return response()->json([
+                    'error' => 'Année non trouvée'
+                ], 404);
+            }
+            return null;  // si l'année existe
+    }
+
+    public function errorMessage(\Exception $e) {
+        return response()->json([
+            'error' => 'Une erreur est survenue',
+            'message' => $e->getMessage()
+        ], 500);
     }
 }

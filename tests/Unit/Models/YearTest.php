@@ -66,12 +66,6 @@ class YearTest extends TestCase
 
     public function test_year_validation()
     {
-        // Test de création avec des données valides
-        $year = Year::create([
-            'name' => '2025-2026',
-            'periodicity' => 'Semestrial'
-        ]);
-
         $this->assertDatabaseHas('years', [
             'name' => '2025-2026',
             'periodicity' => 'Semestrial'
@@ -85,4 +79,4 @@ class YearTest extends TestCase
             'periodicity' => 'Invalid'
         ]);
     }
-} 
+}

@@ -11,6 +11,9 @@ use App\Http\Controllers\WorkInProgressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestEmailController;
 
+const ROLE_READER = 'role:reader';
+const ROLE_EXTENDED_READER = 'role:extended_reader';
+const ROLE_ADMIN = 'role:admin';
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate']);
 
@@ -19,20 +22,20 @@ Route::get('/logout', [AuthController::class, 'logout'])->middleware(['auth'])->
 Route::get('/', [IndexController::class, 'show'])->middleware(['auth'])->name('index');
 
 Route::get('/calendrier-previsionnel', [ProvisionnalCalendarReaderController::class, 'show'])
-    ->middleware(['auth', 'role:reader', 'role:extended_reader'])
+    ->middleware(['auth', ROLE_READER, ROLE_EXTENDED_READER])
     ->name('provisionnal_calendar');
 
 Route::get('/edt', [WorkInProgressController::class, 'show'])
-    ->middleware(['auth', 'role:reader', 'role:extended_reader', 'role:admin'])
+    ->middleware(['auth', ROLE_READER, ROLE_EXTENDED_READER, ROLE_ADMIN])
     ->name('edt');
 
 Route::get('/service', [WorkInProgressController::class, 'show'])
-    ->middleware(['auth', 'role:reader', 'role:extended_reader', 'role:admin'])
+    ->middleware(['auth', ROLE_READER, ROLE_EXTENDED_READER, ROLE_ADMIN])
     ->name('service');
 
 Route::get('/send-test-email', [TestEmailController::class, 'sendTestEmail']);
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', ROLE_ADMIN])->group(function () {
     Route::get('/calendrier-previsionnel/groupes', [GroupsController::class, 'show'])
         ->name('provisionnal_calendar.groups');
 

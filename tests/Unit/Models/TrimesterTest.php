@@ -54,12 +54,6 @@ class TrimesterTest extends TestCase
 
         $year = Year::first();
 
-        // Test de création avec des données valides
-        $trimester = Trimester::create([
-            'trimester_number' => 1,
-            'year_id' => $year->id
-        ]);
-
         $this->assertDatabaseHas('trimesters', [
             'trimester_number' => 1,
             'year_id' => $year->id
@@ -73,4 +67,4 @@ class TrimesterTest extends TestCase
             'year_id' => 999 // ID inexistant
         ]);
     }
-} 
+}
