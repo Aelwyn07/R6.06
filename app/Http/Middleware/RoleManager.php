@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -22,28 +21,24 @@ class RoleManager
 
         $userRole = Auth::user()->role;
 
-        switch ($role) {
-            case 'admin':
-                if ($userRole->level === 0) {
-                    return $next($request);
-                }
-                break;
-            case 'extended_reader':
-            case 'reader':
-                if ($userRole->level === 1 || $userRole->level === 2) {
-                    return $next($request);
-                }
-                break;
+        if (!$userRole) {
+            return redirect()->route('logout');
         }
 
-        switch ($userRole->level) {
-            case 0:
-                return redirect()->route('provisionnal_calendar.groups');
-            case 1:
-            case 2:
-                return redirect()->route('provisionnal_calendar');
+        $roleLevels = [
+            'admin' => [0],
+            'extended_reader' => [1, 2],
+            'reader' => [1, 2]
+        ];
+
+        if (isset($roleLevels[$role]) && in_array($userRole->level, $roleLevels[$role], true)) {
+            return $next($request);
         }
 
-        return redirect()->route('logout');
+        return match ($userRole->level) {
+            0 => redirect()->route('provisionnal_calendar.groups'),
+            1, 2 => redirect()->route('provisionnal_calendar'),
+            default => redirect()->route('logout'),
+        };
     }
 }
